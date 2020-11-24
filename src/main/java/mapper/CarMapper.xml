@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CarDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <insert id="insertCar" parameterType="entity.Car" >
+        <!-- 具体的sql -->
+        insert into carInfo(id,name,carkind,type,color,seatNum,pic,releasetime,description,price)
+        values (#{id},#{name},#{carkind},#{type},#{color},#{seatNum},#{pic},#{releasetime},#{description},#{price})
+    </insert>
+
+    <select id="queryById" parameterType="String" resultType="entity.Car" >
+        <!-- 具体的sql -->
+        select * from carInfo where id=#{id}
+    </select>
+
+    <select id="queryAll" resultType="entity.Car" >
+        <!-- 具体的sql -->
+        select * from carInfo
+    </select>
+
+    <select id="queryByFuzzyName" parameterType="String" resultType="entity.Car" >
+        <!-- 具体的sql -->
+        select * from carInfo where name like CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="queryByType" parameterType="String" resultType="entity.Car" >
+        <!-- 具体的sql -->
+        select * from carInfo where type=#{type}
+    </select>
+
+    <update id="increaseCarClickByID" parameterType="String" >
+        update carInfo set carClick=carClick+1 where id=#{id}
+    </update>
+
+    <select id="getPicPathByID" resultType="String" parameterType="String" >
+        select pic from carInfo where id=#{id}
+    </select>
+
+    <select id="getTOP10ByCarClick" resultType="entity.Car">
+        SELECT * from carinfo ORDER BY carClick desc LIMIT 1,10
+    </select>
+
+    <delete id="deleteCarByID" parameterType="String">
+        delete from carinfo where id=#{id}
+    </delete>
+
+    <update id="updateCarByID" parameterType="entity.Car">
+        update carInfo set name=#{name},carkind=#{carkind},type=#{type},color=#{color},seatNum=#{seatNum},pic=#{pic},releasetime=#{releasetime},description=#{description},price=#{price} where id=#{id}
+    </update>
+
+
+</mapper>

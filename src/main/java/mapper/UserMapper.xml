@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserDao">
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <insert id="insertUser" parameterType="entity.User" >
+        <!-- 具体的sql -->
+        insert into userInfo values (#{id},#{password},#{name},#{sex},#{phone},#{address})
+    </insert>
+    <insert id="insertUser2" parameterType="entity.User" >
+        insert into userInfo values (#{id},#{password},0,0,0,0)
+    </insert>
+    <update id="updataInfo" parameterType="String" >
+        update userInfo set name=#{name},sex=#{sex},phone=#{phone},address=#{address}
+        where id=#{id}
+    </update>
+    <select id="queryById" parameterType="String" resultType="entity.User" >
+        select * from userInfo where id=#{id}
+    </select>
+    <select id="queryByName" parameterType="String" resultType="entity.User" >
+        select * from userInfo where name=#{name}
+    </select>
+    <select id="queryAll" resultType="entity.User" >
+        select * from userInfo
+    </select>
+    <select id="queryUserByFuzzyID" parameterType="String" resultType="entity.User" >
+        select * from userInfo where id like CONCAT('%',#{id},'%')
+    </select>
+    <select id="queryUserByFuzzyName" parameterType="String" resultType="entity.User" >
+        select * from userInfo where name like CONCAT('%',#{name},'%')
+    </select>
+    <select id="login" parameterType="Map" resultType="entity.User">
+        select * from userinfo where id=#{id} and password=#{password}
+    </select>
+    <update id="updateUserByID" parameterType="entity.User" >
+        update userInfo set password=#{password},name=#{name},sex=#{sex},phone=#{phone},address=#{address}
+        where id=#{id}
+    </update>
+    <delete id="deleteUserByID" parameterType="String">
+        DELETE FROM userinfo WHERE id = #{id}
+    </delete>
+</mapper>
